@@ -18,7 +18,7 @@ public class ProductController {
     private final ProductService productService;
 
 
-    @PostMapping
+    @PostMapping( consumes = "application/json")
     public ResponseEntity<ResponseWrapper> createProduct(@RequestBody ProductDto productDTO){
         productService.createProduct(productDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(new ResponseWrapper("Product is successfully created ",productDTO,HttpStatus.CREATED));
