@@ -1,5 +1,9 @@
 package com.micro.inventoryservice.service;
 
+import com.micro.inventoryservice.dto.InventoryDto;
+
+import java.util.List;
+
 public interface InventoryService {
-    boolean isInStock(String skuCode);
+    List<InventoryDto> getData(List<String> skuCode);
 }
