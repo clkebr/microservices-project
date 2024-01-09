@@ -20,6 +20,7 @@ public class InventoryController {
 
     private final InventoryService inventoryService;
 
+    // http://localhost:8082/api/inventory?skuCode=iphone-15,skucode=iphone-15-white
     @GetMapping()
     public ResponseEntity<ResponseWrapper> isInStock(@RequestParam List<String> skuCode){
         List<InventoryDto> dtoList = inventoryService.getData(skuCode);
