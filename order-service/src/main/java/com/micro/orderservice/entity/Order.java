@@ -22,6 +22,6 @@ public class Order {
     String orderNumber;
 
     @OneToMany(fetch = FetchType.EAGER,cascade = {CascadeType.ALL})
-    private List<OrderLineItems> orderLineItemsDto;
+    private List<OrderLineItems> orderLineItems;
 
 }
