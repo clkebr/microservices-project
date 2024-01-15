@@ -4,6 +4,7 @@ import com.micro.orderservice.dto.OrderDto;
 import com.micro.orderservice.entity.ResponseWrapper;
 import com.micro.orderservice.service.OrderService;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.retry.annotation.Retry;
 import io.github.resilience4j.timelimiter.annotation.TimeLimiter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -25,6 +26,7 @@ public class OrderController {
     @PostMapping
     @CircuitBreaker(name = "inventory",fallbackMethod = "inventoryFallback")
     @TimeLimiter(name = "inventory")
+    @Retry(name = "inventory")
     public CompletableFuture<ResponseEntity<ResponseWrapper>>  placeOrder(@RequestBody OrderDto orderDto){
 
         OrderDto createdOrder = orderService.placeOrder(orderDto);
