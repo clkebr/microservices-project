@@ -9,12 +9,12 @@ import com.micro.orderservice.exception.OutOfStockException;
 import com.micro.orderservice.mapper.MapperUtil;
 import com.micro.orderservice.repository.OrderRepository;
 import com.micro.orderservice.service.CommunicationService;
+import com.micro.orderservice.service.KafkaProducer;
 import com.micro.orderservice.service.OrderService;
 import io.micrometer.tracing.Span;
 import io.micrometer.tracing.Tracer;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.UUID;
@@ -32,7 +32,7 @@ public class OrderServiceImpl implements OrderService {
 
     private final Tracer tracer;
 
-    private final KafkaTemplate<String,OrderPlacedEvent> kafkaTemplate;
+    private final KafkaProducer kafkaProducer;
 
 
 
@@ -59,7 +59,7 @@ public class OrderServiceImpl implements OrderService {
             Order saved;
             if (allProductsInStock) {
                 saved = orderRepository.save(order);
-                kafkaTemplate.send("notificationTopic", new OrderPlacedEvent(saved.getOrderNumber()));
+               kafkaProducer.sendMessage(new OrderPlacedEvent(saved.getOrderNumber()));
             } else {
                 throw new OutOfStockException("Product is not in stock, please try again later");
             }
