@@ -5,7 +5,6 @@ import com.micro.inventoryservice.entity.Inventory;
 import com.micro.inventoryservice.mapper.MapperUtil;
 import com.micro.inventoryservice.repository.InventoryRepository;
 import com.micro.inventoryservice.service.InventoryService;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
